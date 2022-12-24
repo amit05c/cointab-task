@@ -10,12 +10,14 @@ import {
     TableCaption,
     TableContainer,
     Avatar,
+    Box,
+    Text,
   } from '@chakra-ui/react'
 
 const TableComp = ({data}) => {
     // console.log(data)
   return (
-    <TableContainer w={"100%"}>
+    <TableContainer w={"80%"} m="auto"  mt={data.length>0 && "2rem"}>
   <Table variant='striped' colorScheme='teal'>
     {/* <TableCaption>Employee of CoinTab</TableCaption> */}
     <Thead>
@@ -28,7 +30,8 @@ const TableComp = ({data}) => {
         <Th>City</Th>
       </Tr>
     </Thead>
-    <Tbody>
+
+     <Tbody>
         {data.map(el=>(
           <Tr key={el._id}>
           <Td><Avatar src={el.photo}/></Td>
@@ -39,11 +42,8 @@ const TableComp = ({data}) => {
           <Td>{el.city}</Td>
         </Tr>
         ))}
-     
-
-     
-
-    </Tbody>
+     </Tbody>
+    
     
   </Table>
 </TableContainer>

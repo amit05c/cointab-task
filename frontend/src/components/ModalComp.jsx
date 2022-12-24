@@ -10,15 +10,26 @@ import {
   Button,
 } from '@chakra-ui/react'
 
-function ModalComp({handleDelete}) {
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+function ModalComp({handleDelete,status}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [deleteStatus,setDeleteStatus]= useState(false)
     const deleteFunc= ()=>{
        handleDelete()
        onClose()
     }
+
+    useEffect(()=>{
+      axios.get(`http://localhost:8080/users/getData`)
+      .then(res=>{if(res.data.allusers.length>0){
+        setDeleteStatus(true)}
+      })
+  },[status,handleDelete])
+
     return (
       <>
-        <Button  colorScheme={"red"} onClick={onOpen}>Delete Users</Button>
+        <Button disabled={!deleteStatus}  colorScheme={"red"} onClick={onOpen}>Delete Users</Button>
   
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />

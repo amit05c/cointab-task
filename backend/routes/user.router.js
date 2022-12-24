@@ -55,16 +55,23 @@ usersRoutes.delete("/delete",async(req,res)=>{
 
 
 usersRoutes.get("/getdata",async(req,res)=>{
+
   let pageNumber = req.query.page || 1;
-  let {gender,country}= req.query
-    console.log(req.query)
+  let {gender,country,search}= req.query
+    // console.log(req.query)
+    if(search){
+      let allusers=await UserModel.find({firstName
+        :req.query.search}) .skip(pageNumber > 0 ? (pageNumber - 1) * 10 : 0)
+    .limit(10);
+  return  res.send(allusers)
+    }
     let allusers=await UserModel.find(req.query) .skip(pageNumber > 0 ? (pageNumber - 1) * 10 : 0)
     .limit(10);
 
     // console.log(allusers)
     let totalPages= await UserModel.find(req.query).count()
     totalPages= Math.ceil(totalPages/10)
-    console.log(totalPages)
+    // console.log(totalPages)
     res.status(200).send({allusers,totalPages})
 })
 
